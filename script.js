@@ -5,7 +5,9 @@ function createPlayer(name) {
 
     const newGameWon = () => gamesWonCount++;
 
-    return { name, getGamesWon, newGameWon };
+    const resetWinCount = () => gamesWonCount = 0;
+
+    return { name, getGamesWon, newGameWon, resetWinCount };
 }
 
 const gameboard = function() {
@@ -30,9 +32,30 @@ const gameboard = function() {
     return { getBoard, updateGrid, resetBoard };
 }();
 
-/* Game manager object (IIFE) 
-Play round function
-Get current player function
-Change current player function 
-Check winner function
-Reset game function */
+const gameManager = function() {
+    const playerX = createPlayer("Player 1");
+    const playerO = createPlayer("Player 2");
+
+    let currentPlayer = player1;
+
+    const getCurrentPlayer = () => currentPlayer;
+
+    const changeCurrentPlayer = () => currentPlayer = ((currentPlayer === playerX) ? playerO : playerX);
+
+    const printNewRound = () => {
+        console.log(board.getBoard());
+        console.log(`${getCurrentPlayer().name}'s turn. Symbol: ${getCurrentPlayer().symbol}`);
+    };
+
+    const playRound = () => { };
+
+    const checkGameWon = () => { };
+
+    const resetGame = () => {
+        board.resetBoard();
+        playerX.resetWinCount();
+        playerO.resetWinCount();
+    };
+
+    return { getCurrentPlayer, playRound };
+}();
