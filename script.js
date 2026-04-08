@@ -43,11 +43,20 @@ const gameManager = function() {
     const changeCurrentPlayer = () => currentPlayer = ((currentPlayer === playerX) ? playerO : playerX);
 
     const printNewRound = () => {
-        console.log(board.getBoard());
+        console.log(gameboard.getBoard());
         console.log(`${getCurrentPlayer().name}'s turn. Symbol: ${getCurrentPlayer().symbol}`);
     };
 
-    const playRound = () => { };
+    const playRound = (row, col) => {        
+        const roundSuccessful = gameboard.updateGrid(getCurrentPlayer().symbol, row, col);
+
+        if (roundSuccessful) {
+            changeCurrentPlayer();
+        } else {
+            console.log("Row and column must be between 0 and 2 and grid must be null!");
+        }
+        printNewRound();
+    };
 
     const checkGameWon = () => { };
 
@@ -57,5 +66,5 @@ const gameManager = function() {
         playerO.resetWinCount();
     };
 
-    return { getCurrentPlayer, playRound };
+    return { getCurrentPlayer, playRound, printNewRound };
 }();
