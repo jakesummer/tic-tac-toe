@@ -8,13 +8,27 @@ function createPlayer(name) {
     return { name, getGamesWon, newGameWon };
 }
 
+const gameboard = function() {
+    const DEFAULT_BOARD = [[null, null, null],
+                           [null, null, null],
+                           [null, null, null]];
 
-/* Gameboard Object (IIFE) 
-Store gameboard in 2d array (each grid starts out as null and gets updated to X or O depending on players icon)
-gameboard getter
-Update grid function 
-Print gameboard function 
-Reset gameboard function*/
+    const board = DEFAULT_BOARD;
+    
+    const getBoard = () => board;
+
+    // Return true if successful, false if not
+    const updateGrid = (symbol, gridRow, gridCol) => {
+        if (board[gridRow][gridCol] === null) {
+            board[gridRow][gridCol] = symbol;
+            return true;
+        } else return false;
+    }
+
+    const resetBoard = () => board = DEFAULT_BOARD;
+
+    return { getBoard, updateGrid, resetBoard };
+}();
 
 /* Game manager object (IIFE) 
 Play round function
