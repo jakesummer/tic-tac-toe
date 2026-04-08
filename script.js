@@ -21,7 +21,7 @@ const gameboard = function() {
 
     // Return true if successful, false if not
     const updateGrid = (symbol, gridRow, gridCol) => {
-        if (board[gridRow][gridCol] === null) {
+        if (board[gridRow][gridCol] === null && (gridRow < 3 && gridRow > -1) && (gridCol < 3 && gridRow > -1)) {
             board[gridRow][gridCol] = symbol;
             return true;
         } else return false;
