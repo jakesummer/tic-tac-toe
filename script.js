@@ -11,9 +11,9 @@ function createPlayer(name, symbol) {
 }
 
 const gameboard = function() {
-    const DEFAULT_BOARD = [[null, null, null],
-                           [null, null, null],
-                           [null, null, null]];
+    const DEFAULT_BOARD = [["-", "-", "-"],
+                           ["-", "-", "-"],
+                           ["-", "-", "-"]];
 
     const board = DEFAULT_BOARD;
     
@@ -21,7 +21,7 @@ const gameboard = function() {
 
     // Return true if successful, false if not
     const updateGrid = (symbol, gridRow, gridCol) => {
-        if (board[gridRow][gridCol] === null && (gridRow < 3 && gridRow > -1) && (gridCol < 3 && gridRow > -1)) {
+        if (board[gridRow][gridCol] === "-" && (gridRow < 3 && gridRow > -1) && (gridCol < 3 && gridRow > -1)) {
             board[gridRow][gridCol] = symbol;
             return true;
         } else return false;
@@ -53,7 +53,7 @@ const gameManager = function() {
         if (roundSuccessful) {
             changeCurrentPlayer();
         } else {
-            console.log("Row and column must be between 0 and 2 and grid must be null!");
+            console.log("Row and column must be between 0 and 2 and grid must be '-'!");
         }
         printNewRound();
     };
