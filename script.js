@@ -36,7 +36,7 @@ const gameManager = function() {
     const playerX = createPlayer("Player 1", "X");
     const playerO = createPlayer("Player 2", "O");
 
-    let currentPlayer = player1;
+    let currentPlayer = playerX;
 
     const getCurrentPlayer = () => currentPlayer;
 
