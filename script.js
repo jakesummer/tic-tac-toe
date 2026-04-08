@@ -1,4 +1,4 @@
-function createPlayer(name) {
+function createPlayer(name, symbol) {
     let gamesWonCount = 0;
     
     const getGamesWon = () => gamesWonCount;
@@ -7,7 +7,7 @@ function createPlayer(name) {
 
     const resetWinCount = () => gamesWonCount = 0;
 
-    return { name, getGamesWon, newGameWon, resetWinCount };
+    return { name, symbol, getGamesWon, newGameWon, resetWinCount };
 }
 
 const gameboard = function() {
@@ -33,8 +33,8 @@ const gameboard = function() {
 }();
 
 const gameManager = function() {
-    const playerX = createPlayer("Player 1");
-    const playerO = createPlayer("Player 2");
+    const playerX = createPlayer("Player 1", "X");
+    const playerO = createPlayer("Player 2", "O");
 
     let currentPlayer = player1;
 
