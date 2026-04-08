@@ -1,7 +1,12 @@
-/* Player Object (factory function)
-Takes player's name
-Variable for number of games won
-Returns getter for games won, and function to add 1 to amount of games won */
+function createPlayer(name) {
+    let gamesWonCount = 0;
+    
+    const getGamesWon = () => gamesWonCount;
+
+    const newGameWon = () => gamesWonCount++;
+
+    return { name, getGamesWon, newGameWon };
+}
 
 
 /* Gameboard Object (IIFE) 
