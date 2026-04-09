@@ -47,30 +47,26 @@ const gameManager = function() {
         console.log(`${getCurrentPlayer().name}'s turn. Symbol: ${getCurrentPlayer().symbol}`);
     };
 
-    //return 0 for no game won, 1 for game won, 2 for tie
+    //return 0 for no game won, current player for game won, 1 for tie
     const playRound = (row, col) => {        
         const roundSuccessful = gameboard.updateGrid(getCurrentPlayer().symbol, row, col);
 
         if ((checkGameWon() || checkGameTie()) && roundSuccessful) {
-            console.log(gameboard.getBoard());
             if (checkGameWon()) { 
-                console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
+                // console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
                 getCurrentPlayer().newGameWon();
-                return 1;
-            } else { 
-                console.log("Tie!");
+                return getCurrentPlayer();
             }
 
-            changeCurrentPlayer();
-            return 2;
+            return 1;
         }
 
         if (roundSuccessful) {
             changeCurrentPlayer();
         } else {
-            console.log("Row and column must be between 0 and 2 and grid must be '-'!");
+            // console.log("Row and column must be between 0 and 2 and grid must be '-'!");
         }
-        printNewRound();
+        // printNewRound();
         return 0;
     };
 
@@ -102,6 +98,7 @@ const gameManager = function() {
 
     const resetGame = () => {
         gameboard.resetBoard();
+        changeCurrentPlayer();
     };
 
     return { getCurrentPlayer, playRound, printNewRound, resetGame };
@@ -115,6 +112,8 @@ Display current player's turn
 Display score for both players
 Displays winner/tie */
 const displayManager = function() {
+    let isGameOver = false;
+
     const boardDiv = document.getElementById("gameboard");
     const playerXCard = document.getElementById("player-x");
     const playerOCard = document.getElementById("player-O");
@@ -142,16 +141,29 @@ const displayManager = function() {
     }
 
     boardDiv.addEventListener("click", (e) => {
+        if (isGameOver) {
+            resetBoardDisplay();
+            gameManager.resetGame();
+            isGameOver = false;
+        }
+
         const gridRow = e.target.getAttribute("data-row");
         const gridCol = e.target.getAttribute("data-col");
 
-        const gameStatus = gameManager.playRound(gridRow, gridCol);
+        const winner = gameManager.playRound(gridRow, gridCol);
         updateScreen()
-        if (gameStatus === 1) {
-            resetBoardDisplay();
-            gameManager.resetGame();
+        if (winner !== 0) {
+            handleGameEnd(winner)
         }
     });
 
-    return { resetBoardDisplay }
+    const handleGameEnd = (winner) => { 
+        isGameOver = true;
+
+        if (winner === 1) {
+            console.log("Tie");
+        } else {
+            console.log(`${winner.name} wins!`);
+        }
+    }
 }();
