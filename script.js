@@ -47,20 +47,22 @@ const gameManager = function() {
         console.log(`${getCurrentPlayer().name}'s turn. Symbol: ${getCurrentPlayer().symbol}`);
     };
 
+    //return 0 for no game won, 1 for game won, 2 for tie
     const playRound = (row, col) => {        
         const roundSuccessful = gameboard.updateGrid(getCurrentPlayer().symbol, row, col);
 
         if ((checkGameWon() || checkGameTie()) && roundSuccessful) {
             console.log(gameboard.getBoard());
-
             if (checkGameWon()) { 
                 console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
                 getCurrentPlayer().newGameWon();
-            } else console.log("Tie!");
+                return 1;
+            } else { 
+                console.log("Tie!");
+            }
 
-            resetGame();
             changeCurrentPlayer();
-            return;
+            return 2;
         }
 
         if (roundSuccessful) {
@@ -69,6 +71,7 @@ const gameManager = function() {
             console.log("Row and column must be between 0 and 2 and grid must be '-'!");
         }
         printNewRound();
+        return 0;
     };
 
     const checkGameWon = () => {
@@ -101,5 +104,54 @@ const gameManager = function() {
         gameboard.resetBoard();
     };
 
-    return { getCurrentPlayer, playRound, printNewRound };
+    return { getCurrentPlayer, playRound, printNewRound, resetGame };
+}();
+
+/* Display Manager (IIFE)
+Handles clicks
+    - Calls gameManager to update board
+    - Displays Symbol on screen
+Display current player's turn
+Display score for both players
+Displays winner/tie */
+const displayManager = function() {
+    const boardDiv = document.getElementById("gameboard");
+    const playerXCard = document.getElementById("player-x");
+    const playerOCard = document.getElementById("player-O");
+
+    const updateScreen = () => {
+        for (const grid of boardDiv.children) {
+            const gridRow = grid.getAttribute("data-row");
+            const gridCol = grid.getAttribute("data-col");
+            const board = gameboard.getBoard();
+            const gridSymbol = board[gridRow][gridCol]
+
+            if (gridSymbol !== "-") {
+                grid.textContent = gridSymbol;
+                grid.classList.add(`${gridSymbol.toLowerCase()}-grid`);
+            }
+        }
+    }
+
+    const resetBoardDisplay = () => {
+        for (const grid of boardDiv.children) {
+            grid.textContent = ""
+            grid.classList.remove("x-grid")
+            grid.classList.remove("o-grid")
+        }
+    }
+
+    boardDiv.addEventListener("click", (e) => {
+        const gridRow = e.target.getAttribute("data-row");
+        const gridCol = e.target.getAttribute("data-col");
+
+        const gameStatus = gameManager.playRound(gridRow, gridCol);
+        updateScreen()
+        if (gameStatus === 1) {
+            resetBoardDisplay();
+            gameManager.resetGame();
+        }
+    });
+
+    return { resetBoardDisplay }
 }();
