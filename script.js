@@ -101,7 +101,7 @@ const gameManager = function() {
         changeCurrentPlayer();
     };
 
-    return { getCurrentPlayer, playRound, printNewRound, resetGame };
+    return { getCurrentPlayer, playRound, printNewRound, resetGame, playerX, playerO };
 }();
 
 /* Display Manager (IIFE)
@@ -114,7 +114,9 @@ Displays winner/tie */
 const displayManager = function() {
     const boardDiv = document.getElementById("gameboard");
     const playerXCard = document.getElementById("player-x");
-    const playerOCard = document.getElementById("player-O");
+    const playerOCard = document.getElementById("player-o");
+    const playerXScoreCount = document.getElementById("score-num-x");
+    const playerOScoreCount = document.getElementById("score-num-o");
     const gameOverModal = document.getElementById("game-over-modal");
     const mainContent = document.getElementById("content");
     const winnerText = document.getElementById("winner-text");
@@ -132,8 +134,24 @@ const displayManager = function() {
                 grid.textContent = gridSymbol;
                 grid.classList.add(`player-${gridSymbol.toLowerCase()}-symbol`);
             }
+
+            updatePlayerCards();
         }
-    }
+    };
+
+    const updatePlayerCards = () => {
+        const currentPlayer = gameManager.getCurrentPlayer();
+        if (currentPlayer.symbol === "X") {
+            playerXCard.classList.add("current-player");
+            playerOCard.classList.remove("current-player");
+        } else {
+            playerXCard.classList.remove("current-player");
+            playerOCard.classList.add("current-player");
+        }
+
+        playerXScoreCount.textContent = gameManager.playerX.getGamesWon();
+        playerOScoreCount.textContent = gameManager.playerO.getGamesWon();
+    };
 
     const resetBoardDisplay = () => {
         for (const grid of boardDiv.children) {
@@ -171,6 +189,7 @@ const displayManager = function() {
     playAgainBtn.addEventListener("click", () => {
         resetBoardDisplay();
         gameManager.resetGame();
+        updatePlayerCards();
         gameOverModal.classList.remove("visible");
         mainContent.style.filter = "blur(0)";
     })

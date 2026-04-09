@@ -67,6 +67,7 @@ h1, h2, h3, h4, h5, h6 {
     --player-x-color: #FF5722;
     --player-o-color: #4A1BFF;
     --font-border-color: #212121;
+    --font-border-color-clear: #2121219b;
     --font-border-color-light: #686666;
     --border-radius: 0.6rem;
 }
@@ -138,6 +139,42 @@ body {
     box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--font-border-color);
     border-radius: var(--border-radius);
     color: var(--font-border-color);
+    position: relative;
+}
+
+.player-card::after {
+    content: "Current Player";
+    background-color: var(--font-border-color);
+    color: var(--card-color);
+    font-weight: 800;
+    border-radius: 2rem;
+    padding: 0.5rem 0.7rem;
+    top: -30px;
+    right: -10px;
+    position: absolute;
+    -webkit-box-shadow: 0.1rem 0.15rem 0rem 0.125rem var(--font-border-color-clear); 
+    box-shadow: 0.1rem 0.15rem 0rem 0.125rem var(--font-border-color-clear);
+    visibility: hidden;
+}
+
+#player-x.current-player {
+    border-color: var(--player-x-color);
+    -webkit-box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--player-x-color); 
+    box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--player-x-color);
+}
+
+#player-x.current-player::after {
+    visibility: visible;
+}
+
+#player-o.current-player {
+    border-color: var(--player-o-color);
+    -webkit-box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--player-o-color); 
+    box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--player-o-color);
+}
+
+#player-o.current-player::after {
+    visibility: visible;
 }
 
 .player-symbol {

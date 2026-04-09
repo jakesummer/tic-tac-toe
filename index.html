@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="content">
-        <div class="player-card" id="player-x">
+        <div class="player-card current-player" id="player-x">
             <div class="player-symbol player-x-symbol">X</div>
             <input type="text" class="player-name" value="Player 1">
             <button class="player-type-btn">
@@ -18,7 +18,7 @@
             </button>
             <div class="player-score">
                 <p class="score-text">Score</p>
-                <p class="score-num">0</p>
+                <p class="score-num" id="score-num-x">0</p>
             </div>
         </div>
         <div id="gameboard">
@@ -41,7 +41,7 @@
             </button>
             <div class="player-score">
                 <p class="score-text">Score</p>
-                <p class="score-num">0</p>
+                <p class="score-num" id="score-num-o">0</p>
             </div>
         </div>
     </div>
