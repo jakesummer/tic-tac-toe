@@ -52,26 +52,57 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* === Styles === */
+:root {
+    --bg-color: #F5F2EA; 
+    --card-color: #FFFFFF;
+    --player-x-color: #FF5722;
+    --player-o-color: #4A1BFF;
+    --font-border-color: #212121;
+    --border-radius: 0.6rem;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     gap: 5rem;
+    background-color: var(--bg-color);
 }
 
 #gameboard {
     width: 30rem;
     height: 30rem;
     aspect-ratio: 1 / 1;
-    border: 10px solid black;
+    background-color: var(--font-border-color);
+    border: 0.25rem solid var(--font-border-color);
+    -webkit-box-shadow: 0.5rem 0.5rem 0rem 0.3125rem var(--font-border-color); 
+    box-shadow: 0.5rem 0.5rem 0rem 0.3125rem var(--font-border-color);
+    border-radius: var(--border-radius);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 }
 
 .grid {
-    border: 5px solid black;
+    border: 0.15rem solid var(--font-border-color);
+    background-color: var(--card-color);
+}
+
+.grid[data-row="0"][data-col="0"] {
+    border-top-left-radius: var(--border-radius);
+}
+
+.grid[data-row="0"][data-col="2"] {
+    border-top-right-radius: var(--border-radius);
+}
+
+.grid[data-row="2"][data-col="0"] {
+    border-bottom-left-radius: var(--border-radius);
+}
+
+.grid[data-row="2"][data-col="2"] {
+    border-bottom-right-radius: var(--border-radius);
 }
 
 .player-card {
