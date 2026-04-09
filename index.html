@@ -8,6 +8,36 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    
+    <div class="player-card" id="player-x">
+        <div class="player-symbol">X</div>
+        <input type="text" class="player-name" value="Player1">
+        <button class="player-type-btn">Human</button>
+        <div class="player-score">
+            <p>Score</p>
+            <p class="score-num">0</p>
+        </div>
+    </div>
+
+    <div id="gameboard">
+        <div class="grid" data-row="0" data-col="0"></div>
+        <div class="grid" data-row="0" data-col="1"></div>
+        <div class="grid" data-row="0" data-col="2"></div>
+        <div class="grid" data-row="1" data-col="0"></div>
+        <div class="grid" data-row="1" data-col="1"></div>
+        <div class="grid" data-row="1" data-col="2"></div>
+        <div class="grid" data-row="2" data-col="0"></div>
+        <div class="grid" data-row="2" data-col="1"></div>
+        <div class="grid" data-row="2" data-col="2"></div>
+    </div>
+
+    <div class="player-card" id="player-o">
+        <div class="player-symbol">O</div>
+        <input type="text" class="player-name" value="Player2">
+        <button class="player-type-btn">Robot</button>
+        <div class="player-score">
+            <p>Score</p>
+            <p class="score-num">0</p>
+        </div>
+    </div>
 </body>
 </html>
