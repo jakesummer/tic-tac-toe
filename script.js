@@ -53,10 +53,13 @@ const gameManager = function() {
         if ((checkGameWon() || checkGameTie()) && roundSuccessful) {
             console.log(gameboard.getBoard());
 
-            if (checkGameWon()) console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
-            else console.log("Tie!");
+            if (checkGameWon()) { 
+                console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
+                getCurrentPlayer().newGameWon();
+            } else console.log("Tie!");
 
             resetGame();
+            changeCurrentPlayer();
             return;
         }
 
