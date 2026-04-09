@@ -15,7 +15,7 @@ const gameboard = function() {
                            ["-", "-", "-"],
                            ["-", "-", "-"]];
 
-    const board = DEFAULT_BOARD;
+    let board = structuredClone(DEFAULT_BOARD);
     
     const getBoard = () => board;
 
@@ -29,7 +29,7 @@ const gameboard = function() {
         } else return false;
     }
 
-    const resetBoard = () => board = DEFAULT_BOARD;
+    const resetBoard = () => board = structuredClone(DEFAULT_BOARD);
 
     return { getBoard, updateGrid, resetBoard };
 }();
@@ -92,7 +92,7 @@ const gameManager = function() {
     };
 
     const resetGame = () => {
-        board.resetBoard();
+        gameboard.resetBoard();
         playerX.resetWinCount();
         playerO.resetWinCount();
     };
