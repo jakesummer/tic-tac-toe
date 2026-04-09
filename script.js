@@ -129,7 +129,7 @@ const displayManager = function() {
 
             if (gridSymbol !== "-") {
                 grid.textContent = gridSymbol;
-                grid.classList.add(`${gridSymbol.toLowerCase()}-grid`);
+                grid.classList.add(`player-${gridSymbol.toLowerCase()}-symbol`);
             }
         }
     }
@@ -137,8 +137,8 @@ const displayManager = function() {
     const resetBoardDisplay = () => {
         for (const grid of boardDiv.children) {
             grid.textContent = ""
-            grid.classList.remove("x-grid")
-            grid.classList.remove("o-grid")
+            grid.classList.remove("player-x-symbol")
+            grid.classList.remove("player-o-symbol")
         }
     }
 

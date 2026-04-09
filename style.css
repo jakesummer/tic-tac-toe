@@ -152,14 +152,6 @@ body {
     cursor: pointer;
 }
 
-#player-x .player-symbol {
-    color: var(--player-x-color);
-}
-
-#player-o .player-symbol {
-    color: var(--player-o-color);
-}
-
 .player-name {
     background-color: transparent;
     border: none;
@@ -208,4 +200,12 @@ body {
 .score-num {
     font-size: 2.5rem;
     color: var(--font-border-color);
+}
+
+.player-x-symbol {
+    color: var(--player-x-color);
+}
+
+.player-o-symbol {
+    color: var(--player-o-color);
 }
