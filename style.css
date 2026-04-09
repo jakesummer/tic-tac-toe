@@ -98,6 +98,11 @@ body {
 .grid {
     border: 0.15rem solid var(--font-border-color);
     background-color: var(--card-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 6rem;
 }
 
 .grid[data-row="0"][data-col="0"] {
