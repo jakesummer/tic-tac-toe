@@ -116,6 +116,7 @@ const displayManager = function() {
     const playerXCard = document.getElementById("player-x");
     const playerOCard = document.getElementById("player-O");
     const gameOverModal = document.getElementById("game-over-modal");
+    const mainContent = document.getElementById("content");
     const winnerText = document.getElementById("winner-text");
     const winnerSymbol = document.getElementById("winner-symbol");
     const playAgainBtn = document.getElementById("play-again-btn");
@@ -162,12 +163,14 @@ const displayManager = function() {
             winnerSymbol.className = `player-${winner.symbol.toLowerCase()}-symbol`;
         }
 
-        gameOverModal.show();
+        gameOverModal.classList.add("visible");
+        mainContent.style.filter = "blur(9px)";
     }
 
     playAgainBtn.addEventListener("click", () => {
         resetBoardDisplay();
         gameManager.resetGame();
-        gameOverModal.close();
+        gameOverModal.classList.remove("visible");
+        mainContent.style.filter = "blur(0)";
     })
 }();

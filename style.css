@@ -72,13 +72,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
+    background-color: var(--bg-color);
+    font-family: "PlusJakartaSans", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#content {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     gap: 5rem;
-    background-color: var(--bg-color);
-    font-family: "PlusJakartaSans", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 #gameboard {
@@ -213,4 +216,42 @@ body {
 
 .player-o-symbol {
     color: var(--player-o-color);
+}
+
+#game-over-modal {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 50%;
+    height: 40%;
+    display: none;
+    background-color: var(--card-color);
+    border: 0.5rem solid var(--font-border-color);
+}
+
+#game-over-modal.visible {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-top {
+    display: flex;
+    gap: 3rem;
+    font-size: 3.5rem;
+    align-items: center;
+}
+
+#winner-symbol {
+    font-size: 2em;
+    font-weight: 800;
+}
+
+#play-again-btn {
+    width: 75%;
+    height: 30%;
+    font-size: 1.5rem;
+    font-weight: 800;
+    cursor: pointer;
 }
