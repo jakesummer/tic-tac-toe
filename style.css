@@ -67,6 +67,7 @@ h1, h2, h3, h4, h5, h6 {
     --player-x-color: #FF5722;
     --player-o-color: #4A1BFF;
     --font-border-color: #212121;
+    --font-border-color-light: #686666;
     --border-radius: 0.6rem;
 }
 
@@ -117,18 +118,94 @@ body {
 
 .player-card {
     display: grid;
-    grid-template-rows: 3fr repeat(4, 1fr);
+    grid-template-rows: 3fr 1fr 1fr 2fr;
     place-items: center;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    background-color: var(--card-color);
+    height: 25rem;
+    width: 20rem;
+    border: 0.1875rem solid var(--font-border-color);
+    -webkit-box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--font-border-color); 
+    box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--font-border-color);
+    border-radius: var(--border-radius);
+    color: var(--font-border-color);
 }
 
 .player-symbol {
     place-self: center;
-    font-size: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    width: 8rem;
+    height: 8rem;
+    aspect-ratio: 1 / 1;
+    padding: 1.5rem;
+    line-height: 0;
+
+    font-weight: 800;
+    border: 0.1875rem solid var(--font-border-color);
+    -webkit-box-shadow: 0.2rem 0.15rem 0rem 0.125rem var(--font-border-color); 
+    box-shadow: 0.2rem 0.15rem 0rem 0.125rem var(--font-border-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#player-x .player-symbol {
+    color: var(--player-x-color);
+}
+
+#player-o .player-symbol {
+    color: var(--player-o-color);
+}
+
+.player-name {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.5rem;
+    width: 85%;
+    border-bottom: 0.2rem dashed var(--font-border-color-light);
+    padding: 0.625rem;
+}
+
+.player-type-btn {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 0.2rem solid var(--font-border-color);
+    border-radius: 2rem;
+    padding: 0.5rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    gap: 1em;
+    cursor: pointer;
+}
+
+.player-type-btn svg {
+    width: 2em;
+    height: 2em;
 }
 
 .player-score {
-    grid-row: 5 / 6;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    padding: 0 1rem;
+    align-items: center;
+    font-weight: 800;
+    border-top: 0.2rem solid var(--font-border-color);
+    width: 85%;
+}
+
+.score-text {
+    font-size: 1.5rem;
+    color: var(--font-border-color-light);
+}
+
+.score-num {
+    font-size: 2.5rem;
+    color: var(--font-border-color);
 }
