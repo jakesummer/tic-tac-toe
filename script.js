@@ -15,7 +15,7 @@ const gameboard = function() {
 
     let board = structuredClone(DEFAULT_BOARD);
     
-    const getBoard = () => board;
+    const getBoard = () => structuredClone(board);
 
     // Return true if successful, false if not
     const updateGrid = (symbol, gridRow, gridCol) => {
