@@ -58,7 +58,29 @@ const gameManager = function() {
         printNewRound();
     };
 
-    const checkGameWon = () => { };
+    const checkGameWon = () => {
+        const currBoard = gameboard.getBoard();
+
+        // Check for 3 of the same across
+        for (let i = 0; i < 3; i++) {
+            if (currBoard[i][0] === "-") continue; // Make sure row isn't in it's default state as the entire board is set to "-"
+            if (currBoard[i][0] === currBoard[i][1] && currBoard[i][0] === currBoard[i][2]) return true;
+        }
+
+        // Check for 3 of the same down
+        for (let i = 0; i < 3; i++) {
+            if (currBoard[0][i] === "-") continue;
+            if (currBoard[0][i] === currBoard[1][i] && currBoard[0][i] === currBoard[2][i]) return true;
+        }
+
+        // Check for 3 of the same diagonal
+        if (currBoard[1][1] !== "-") {
+            if (currBoard[0][0] === currBoard[1][1] && currBoard[1][1] === currBoard[2][2]) return true;
+            if (currBoard[0][2] === currBoard[1][1] && currBoard[1][1] === currBoard[2][0]) return true;
+        }
+
+        return false;
+    };
 
     const resetGame = () => {
         board.resetBoard();
