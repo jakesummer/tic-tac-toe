@@ -112,11 +112,13 @@ Display current player's turn
 Display score for both players
 Displays winner/tie */
 const displayManager = function() {
-    let isGameOver = false;
-
     const boardDiv = document.getElementById("gameboard");
     const playerXCard = document.getElementById("player-x");
     const playerOCard = document.getElementById("player-O");
+    const gameOverModal = document.getElementById("game-over-modal");
+    const winnerText = document.getElementById("winner-text");
+    const winnerSymbol = document.getElementById("winner-symbol");
+    const playAgainBtn = document.getElementById("play-again-btn");
 
     const updateScreen = () => {
         for (const grid of boardDiv.children) {
@@ -141,12 +143,6 @@ const displayManager = function() {
     }
 
     boardDiv.addEventListener("click", (e) => {
-        if (isGameOver) {
-            resetBoardDisplay();
-            gameManager.resetGame();
-            isGameOver = false;
-        }
-
         const gridRow = e.target.getAttribute("data-row");
         const gridCol = e.target.getAttribute("data-col");
 
@@ -158,12 +154,20 @@ const displayManager = function() {
     });
 
     const handleGameEnd = (winner) => { 
-        isGameOver = true;
-
         if (winner === 1) {
-            console.log("Tie");
+            winnerText.textContent = "Tie!";
         } else {
-            console.log(`${winner.name} wins!`);
+            winnerText.textContent = `${winner.name} wins!`;
+            winnerSymbol.textContent = `${winner.symbol}`;
+            winnerSymbol.className = `player-${winner.symbol.toLowerCase()}-symbol`;
         }
+
+        gameOverModal.show();
     }
+
+    playAgainBtn.addEventListener("click", () => {
+        resetBoardDisplay();
+        gameManager.resetGame();
+        gameOverModal.close();
+    })
 }();
