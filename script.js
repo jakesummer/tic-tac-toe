@@ -144,6 +144,7 @@ const displayManager = function() {
     }
 
     boardDiv.addEventListener("click", (e) => {
+        if (!e.target.hasAttribute("data-row")) return
         const gridRow = e.target.getAttribute("data-row");
         const gridCol = e.target.getAttribute("data-col");
 
