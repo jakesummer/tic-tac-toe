@@ -50,6 +50,13 @@ const gameManager = function() {
     const playRound = (row, col) => {        
         const roundSuccessful = gameboard.updateGrid(getCurrentPlayer().symbol, row, col);
 
+        if (checkGameWon() && roundSuccessful) {
+            console.log(gameboard.getBoard());
+            console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
+            resetGame();
+            return;
+        }
+
         if (roundSuccessful) {
             changeCurrentPlayer();
         } else {
