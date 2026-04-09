@@ -52,9 +52,12 @@ const gameManager = function() {
     const playRound = (row, col) => {        
         const roundSuccessful = gameboard.updateGrid(getCurrentPlayer().symbol, row, col);
 
-        if (checkGameWon() && roundSuccessful) {
+        if ((checkGameWon() || checkGameTie()) && roundSuccessful) {
             console.log(gameboard.getBoard());
-            console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
+
+            if (checkGameWon()) console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
+            else console.log("Tie!");
+
             resetGame();
             return;
         }
@@ -90,6 +93,8 @@ const gameManager = function() {
 
         return false;
     };
+
+    const checkGameTie = () => !gameboard.getBoard().flat().includes("-");
 
     const resetGame = () => {
         gameboard.resetBoard();
