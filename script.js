@@ -53,7 +53,6 @@ const gameManager = function() {
 
         if ((checkGameWon() || checkGameTie()) && roundSuccessful) {
             if (checkGameWon()) { 
-                // console.log(`${getCurrentPlayer().name} (${getCurrentPlayer().symbol}) won!`);
                 getCurrentPlayer().newGameWon();
                 return getCurrentPlayer();
             }
@@ -63,10 +62,7 @@ const gameManager = function() {
 
         if (roundSuccessful) {
             changeCurrentPlayer();
-        } else {
-            // console.log("Row and column must be between 0 and 2 and grid must be '-'!");
         }
-        // printNewRound();
         return 0;
     };
 
@@ -104,13 +100,6 @@ const gameManager = function() {
     return { getCurrentPlayer, playRound, printNewRound, resetGame, playerX, playerO };
 }();
 
-/* Display Manager (IIFE)
-Handles clicks
-    - Calls gameManager to update board
-    - Displays Symbol on screen
-Display current player's turn
-Display score for both players
-Displays winner/tie */
 const displayManager = function() {
     const boardDiv = document.getElementById("gameboard");
     const playerXCard = document.getElementById("player-x");
