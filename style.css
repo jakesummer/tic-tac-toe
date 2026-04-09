@@ -297,3 +297,9 @@ body {
     font-weight: 800;
     cursor: pointer;
 }
+
+#color-input-x,
+#color-input-o {
+    visibility: hidden;
+    position: absolute;
+}

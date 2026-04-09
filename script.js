@@ -108,6 +108,10 @@ const displayManager = function() {
     const playerOScoreCount = document.getElementById("score-num-o");
     const playerXNameInput = document.getElementById("player-x-name");
     const playerONameInput = document.getElementById("player-o-name");
+    const playerXIcon = document.getElementById("player-x-icon")
+    const playerOIcon = document.getElementById("player-o-icon")
+    const colorInputX = document.getElementById("color-input-x");
+    const colorInputO = document.getElementById("color-input-o");
     const gameOverModal = document.getElementById("game-over-modal");
     const mainContent = document.getElementById("content");
     const winnerText = document.getElementById("winner-text");
@@ -183,14 +187,19 @@ const displayManager = function() {
         updatePlayerCards();
         gameOverModal.classList.remove("visible");
         mainContent.style.filter = "blur(0)";
-    })
+    });
 
     // Player changed name
     playerXNameInput.addEventListener("change", (e) => {
         gameManager.playerX.name = e.target.value;
-    })
-
+    });
     playerONameInput.addEventListener("change", (e) => {
         gameManager.playerO.name = e.target.value;
-    })
+    });
+
+    // Player clicked to changed color
+    playerXIcon.addEventListener("click", () => colorInputX.click());
+    colorInputX.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-x-color", e.target.value))
+    playerOIcon.addEventListener("click", () => colorInputO.click());
+    colorInputO.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-o-color", e.target.value))
 }();
