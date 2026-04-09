@@ -208,6 +208,11 @@ body {
     padding: 0.625rem;
 }
 
+.player-name:focus {
+    outline: none;
+    border: 0.2rem dashed var(--font-border-color-light);
+}
+
 .player-type-btn {
     display: flex;
     align-items: center;
@@ -259,7 +264,7 @@ body {
     position: absolute;
     inset: 0;
     margin: auto;
-    width: 50%;
+    width: 60%;
     height: 40%;
     display: none;
     background-color: var(--card-color);

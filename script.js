@@ -106,6 +106,8 @@ const displayManager = function() {
     const playerOCard = document.getElementById("player-o");
     const playerXScoreCount = document.getElementById("score-num-x");
     const playerOScoreCount = document.getElementById("score-num-o");
+    const playerXNameInput = document.getElementById("player-x-name");
+    const playerONameInput = document.getElementById("player-o-name");
     const gameOverModal = document.getElementById("game-over-modal");
     const mainContent = document.getElementById("content");
     const winnerText = document.getElementById("winner-text");
@@ -181,5 +183,14 @@ const displayManager = function() {
         updatePlayerCards();
         gameOverModal.classList.remove("visible");
         mainContent.style.filter = "blur(0)";
+    })
+
+    // Player changed name
+    playerXNameInput.addEventListener("change", (e) => {
+        gameManager.playerX.name = e.target.value;
+    })
+
+    playerONameInput.addEventListener("change", (e) => {
+        gameManager.playerO.name = e.target.value;
     })
 }();
