@@ -271,6 +271,11 @@ body {
     border: 0.5rem solid var(--font-border-color);
 }
 
+#game-over-modal,
+#play-again-btn {
+    border-radius: 4rem;
+}
+
 #game-over-modal.visible {
     display: flex;
     flex-direction: column;
@@ -296,6 +301,7 @@ body {
     font-size: 1.5rem;
     font-weight: 800;
     cursor: pointer;
+    border: none;
 }
 
 #color-input-x,
