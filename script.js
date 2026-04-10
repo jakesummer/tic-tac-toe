@@ -216,7 +216,8 @@ const displayManager = function() {
     playAgainBtn.addEventListener("click", () => {
         resetBoardDisplay();
         gameManager.resetGame();
-        updatePlayerCards();
+        gameManager.checkIsBot();
+        updateScreen();
         gameOverModal.classList.remove("visible");
         mainContent.style.filter = "blur(0)";
     });
