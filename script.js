@@ -1,11 +1,31 @@
 function createPlayer(name, symbol) {
+    const isBot = false;
+
     let gamesWonCount = 0;
     
     const getGamesWon = () => gamesWonCount;
 
     const newGameWon = () => gamesWonCount++;
 
-    return { name, symbol, getGamesWon, newGameWon };
+    return { name, symbol, isBot, getGamesWon, newGameWon };
+}
+
+function createBot(botName, botSymbol) {
+    const isBot = true;
+
+    const { name, symbol, getGamesWon, newGameWon } = createPlayer(botName, botSymbol);
+
+    const playRound = () => {
+        let isRoundSuccessful = 2;
+        while (isRoundSuccessful === 2) {
+            const gridRow = Math.floor(Math.random() * 3);
+            const gridCol = Math.floor(Math.random() * 3);
+            isRoundSuccessful = gameManager.playRound(gridRow, gridCol);
+        }
+        return isRoundSuccessful;
+    };
+
+    return { name, symbol, isBot, getGamesWon, newGameWon, playRound };
 }
 
 const gameboard = function() {
@@ -34,7 +54,7 @@ const gameboard = function() {
 
 const gameManager = function() {
     const playerX = createPlayer("Player 1", "X");
-    const playerO = createPlayer("Player 2", "O");
+    const playerO = createBot("Player 2", "O");
 
     let currentPlayer = playerX;
 
@@ -47,8 +67,12 @@ const gameManager = function() {
         console.log(`${getCurrentPlayer().name}'s turn. Symbol: ${getCurrentPlayer().symbol}`);
     };
 
-    //return 0 for no game won, current player for game won, 1 for tie
-    const playRound = (row, col) => {        
+    const checkIsBot = () => {
+        if (getCurrentPlayer().isBot) return getCurrentPlayer().playRound();
+    };
+
+    //return 0 for no game won, current player for game won, 1 for tie, 2 for unsuccessful
+    const playRound = (row, col) => {      
         const roundSuccessful = gameboard.updateGrid(getCurrentPlayer().symbol, row, col);
 
         if ((checkGameWon() || checkGameTie()) && roundSuccessful) {
@@ -62,7 +86,9 @@ const gameManager = function() {
 
         if (roundSuccessful) {
             changeCurrentPlayer();
-        }
+        } else {
+            return 2
+        };
         return 0;
     };
 
@@ -97,7 +123,7 @@ const gameManager = function() {
         changeCurrentPlayer();
     };
 
-    return { getCurrentPlayer, playRound, printNewRound, resetGame, playerX, playerO };
+    return { getCurrentPlayer, playRound, printNewRound, resetGame, checkIsBot, playerX, playerO };
 }();
 
 const displayManager = function() {
@@ -161,12 +187,18 @@ const displayManager = function() {
         const gridRow = e.target.getAttribute("data-row");
         const gridCol = e.target.getAttribute("data-col");
 
-        const winner = gameManager.playRound(gridRow, gridCol);
-        updateScreen()
-        if (winner !== 0) {
-            handleGameEnd(winner)
-        }
+        let winner = gameManager.playRound(gridRow, gridCol);
+        checkWinner(winner);
+        winner = gameManager.checkIsBot();
+        checkWinner(winner);
     });
+
+    const checkWinner = (winnerVal) => {
+        updateScreen()
+        if (winnerVal !== 0) {
+            handleGameEnd(winnerVal);
+        }
+    };
 
     const handleGameEnd = (winner) => { 
         if (winner === 1) {
@@ -202,4 +234,6 @@ const displayManager = function() {
     colorInputX.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-x-color", e.target.value))
     playerOIcon.addEventListener("click", () => colorInputO.click());
     colorInputO.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-o-color", e.target.value))
+
+    return { updateScreen };
 }();
