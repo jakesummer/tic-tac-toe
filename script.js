@@ -68,7 +68,13 @@ const gameManager = function() {
     };
 
     const checkIsBot = () => {
-        if (getCurrentPlayer().isBot) return getCurrentPlayer().playRound();
+        if (getCurrentPlayer().isBot) {
+            const timeout = (Math.random() * (1500 - 500 + 1) + 500); // Random time between 0.5 sec and 1.5 sec
+            setTimeout(() => {
+                const turnResult = getCurrentPlayer().playRound();
+                displayManager.handleTurnEnd(turnResult);
+            }, timeout);
+        }
     };
 
     //return 0 for no game won, current player for game won, 1 for tie, 2 for unsuccessful
@@ -187,17 +193,16 @@ const displayManager = function() {
         const gridRow = e.target.getAttribute("data-row");
         const gridCol = e.target.getAttribute("data-col");
 
-        let winner = gameManager.playRound(gridRow, gridCol);
-        checkWinner(winner);
-        winner = gameManager.checkIsBot();
-        checkWinner(winner);
+        let turnResult = gameManager.playRound(gridRow, gridCol);
+        handleTurnEnd(turnResult);
     });
 
-    const checkWinner = (winnerVal) => {
+    const handleTurnEnd = (turnResult) => {
         updateScreen()
-        if (winnerVal !== 0) {
-            handleGameEnd(winnerVal);
+        if (turnResult !== 0) {
+            handleGameEnd(turnResult);
         }
+        gameManager.checkIsBot();
     };
 
     const handleGameEnd = (winner) => { 
@@ -236,5 +241,5 @@ const displayManager = function() {
     playerOIcon.addEventListener("click", () => colorInputO.click());
     colorInputO.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-o-color", e.target.value))
 
-    return { updateScreen };
+    return { handleTurnEnd };
 }();

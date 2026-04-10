@@ -144,17 +144,35 @@ body {
 
 .player-card::after {
     content: "Current Player";
+    top: -30px;
+    right: -10px;
+}
+
+.bot::before {
+    content: "Thinking...";
+    top: -30px;
+    left: -10px;
+}
+
+.player-card::after,
+.bot::before {
+    position: absolute;
+    -webkit-box-shadow: 0.1rem 0.15rem 0rem 0.125rem var(--font-border-color-clear); 
+    box-shadow: 0.1rem 0.15rem 0rem 0.125rem var(--font-border-color-clear);
     background-color: var(--font-border-color);
     color: var(--card-color);
     font-weight: 800;
     border-radius: 2rem;
     padding: 0.5rem 0.7rem;
-    top: -30px;
-    right: -10px;
-    position: absolute;
-    -webkit-box-shadow: 0.1rem 0.15rem 0rem 0.125rem var(--font-border-color-clear); 
-    box-shadow: 0.1rem 0.15rem 0rem 0.125rem var(--font-border-color-clear);
     visibility: hidden;
+}
+
+.current-player::after {
+    visibility: visible;
+}
+
+.current-player.bot::before {
+    visibility: visible;
 }
 
 #player-x.current-player {
@@ -163,18 +181,11 @@ body {
     box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--player-x-color);
 }
 
-#player-x.current-player::after {
-    visibility: visible;
-}
 
 #player-o.current-player {
     border-color: var(--player-o-color);
     -webkit-box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--player-o-color); 
     box-shadow: 0.3125rem 0.3125rem 0rem 0.125rem var(--player-o-color);
-}
-
-#player-o.current-player::after {
-    visibility: visible;
 }
 
 .player-symbol {
