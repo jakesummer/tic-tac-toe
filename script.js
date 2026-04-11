@@ -53,14 +53,34 @@ const gameboard = function() {
 }();
 
 const gameManager = function() {
-    const playerX = createPlayer("Player 1", "X");
-    const playerO = createBot("Player 2", "O");
+    let playerX = createPlayer("Player 1", "X");
+    let playerO = createBot("Player 2", "O");
 
     let currentPlayer = playerX;
 
     const getCurrentPlayer = () => currentPlayer;
 
     const changeCurrentPlayer = () => currentPlayer = ((currentPlayer === playerX) ? playerO : playerX);
+
+    const changePlayerType = (player) => {
+        if (player === "x") {
+            if (playerX.isBot) {
+                playerX = createPlayer(playerX.name, "X");
+                displayManager.playerXCard.classList.remove("bot");
+            } else {
+                playerX = createBot(playerX.name, "X");
+                displayManager.playerXCard.classList.add("bot");
+            }
+        } else {
+            if (playerO.isBot) {
+                playerO = createPlayer(playerO.name, "O");
+                displayManager.playerOCard.classList.remove("bot");
+            } else {
+                playerO = createBot(playerO.name, "O");
+                displayManager.playerOCard.classList.add("bot");
+            }
+        }
+    };
 
     const printNewRound = () => {
         console.log(gameboard.getBoard());
@@ -129,7 +149,7 @@ const gameManager = function() {
         changeCurrentPlayer();
     };
 
-    return { getCurrentPlayer, playRound, printNewRound, resetGame, checkIsBot, playerX, playerO };
+    return { getCurrentPlayer, playRound, printNewRound, resetGame, checkIsBot, changePlayerType, playerX, playerO };
 }();
 
 const displayManager = function() {
@@ -149,6 +169,7 @@ const displayManager = function() {
     const winnerText = document.getElementById("winner-text");
     const winnerSymbol = document.getElementById("winner-symbol");
     const playAgainBtn = document.getElementById("play-again-btn");
+    const playerTypeBtn = document.querySelectorAll(".player-type-btn");
 
     const updateScreen = () => {
         for (const grid of boardDiv.children) {
@@ -186,7 +207,7 @@ const displayManager = function() {
             grid.classList.remove("player-x-symbol")
             grid.classList.remove("player-o-symbol")
         }
-    }
+    };
 
     boardDiv.addEventListener("click", (e) => {
         if (!gameManager.getCurrentPlayer().isBot) {
@@ -218,13 +239,17 @@ const displayManager = function() {
 
         gameOverModal.classList.add("visible");
         mainContent.style.filter = "blur(9px)";
-    }
+    };
 
-    playAgainBtn.addEventListener("click", () => {
+    const restartGame = () => {
         resetBoardDisplay();
         gameManager.resetGame();
         gameManager.checkIsBot();
         updateScreen();
+    };
+
+    playAgainBtn.addEventListener("click", () => {
+        restartGame();
         gameOverModal.classList.remove("visible");
         mainContent.style.filter = "blur(0)";
     });
@@ -239,9 +264,27 @@ const displayManager = function() {
 
     // Player clicked to changed color
     playerXIcon.addEventListener("click", () => colorInputX.click());
-    colorInputX.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-x-color", e.target.value))
+    colorInputX.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-x-color", e.target.value));
     playerOIcon.addEventListener("click", () => colorInputO.click());
-    colorInputO.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-o-color", e.target.value))
+    colorInputO.addEventListener("change", (e) => document.documentElement.style.setProperty("--player-o-color", e.target.value));
 
-    return { handleTurnEnd };
+    // Player changed type (human/robot)
+    playerTypeBtn.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            if (e.currentTarget.dataset.type === "human") {
+                e.currentTarget.dataset.type = "bot";
+                e.currentTarget.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>robot</title><path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22A1,1 0 0,1 23,15V18A1,1 0 0,1 22,19H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V19H2A1,1 0 0,1 1,18V15A1,1 0 0,1 2,14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,13A2.5,2.5 0 0,0 5,15.5A2.5,2.5 0 0,0 7.5,18A2.5,2.5 0 0,0 10,15.5A2.5,2.5 0 0,0 7.5,13M16.5,13A2.5,2.5 0 0,0 14,15.5A2.5,2.5 0 0,0 16.5,18A2.5,2.5 0 0,0 19,15.5A2.5,2.5 0 0,0 16.5,13Z" /></svg>
+                <p>Robot</p>`;
+            } else {
+                e.currentTarget.dataset.type = "human";
+                e.currentTarget.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>account</title><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
+                <p>Human</p>`;
+            }
+
+            gameManager.changePlayerType(e.currentTarget.dataset.player);
+            restartGame();
+        })
+    });
+
+    return { handleTurnEnd, playerOCard, playerXCard };
 }();
