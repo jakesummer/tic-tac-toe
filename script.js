@@ -189,12 +189,14 @@ const displayManager = function() {
     }
 
     boardDiv.addEventListener("click", (e) => {
-        if (!e.target.hasAttribute("data-row")) return
-        const gridRow = e.target.getAttribute("data-row");
-        const gridCol = e.target.getAttribute("data-col");
+        if (!gameManager.getCurrentPlayer().isBot) {
+            if (!e.target.hasAttribute("data-row")) return
+            const gridRow = e.target.getAttribute("data-row");
+            const gridCol = e.target.getAttribute("data-col");
 
-        let turnResult = gameManager.playRound(gridRow, gridCol);
-        handleTurnEnd(turnResult);
+            let turnResult = gameManager.playRound(gridRow, gridCol);
+            handleTurnEnd(turnResult);
+        }
     });
 
     const handleTurnEnd = (turnResult) => {
