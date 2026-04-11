@@ -53,10 +53,14 @@ const gameboard = function() {
 }();
 
 const gameManager = function() {
+    let isGameOver = false;
+
     let playerX = createPlayer("Player 1", "X");
     let playerO = createBot("Player 2", "O");
 
     let currentPlayer = playerX;
+
+    const setIsGameOver = (val) => isGameOver = val;
 
     const getCurrentPlayer = () => currentPlayer;
 
@@ -88,7 +92,7 @@ const gameManager = function() {
     };
 
     const checkIsBot = () => {
-        if (getCurrentPlayer().isBot) {
+        if (getCurrentPlayer().isBot && !isGameOver) {
             const timeout = (Math.random() * (1500 - 500 + 1) + 500); // Random time between 0.5 sec and 1.5 sec
             setTimeout(() => {
                 const turnResult = getCurrentPlayer().playRound();
@@ -146,10 +150,11 @@ const gameManager = function() {
 
     const resetGame = () => {
         gameboard.resetBoard();
+        isGameOver = false;
         changeCurrentPlayer();
     };
 
-    return { getCurrentPlayer, playRound, printNewRound, resetGame, checkIsBot, changePlayerType, playerX, playerO };
+    return { getCurrentPlayer, playRound, printNewRound, resetGame, checkIsBot, changePlayerType, setIsGameOver, playerX, playerO};
 }();
 
 const displayManager = function() {
@@ -228,7 +233,9 @@ const displayManager = function() {
         gameManager.checkIsBot();
     };
 
-    const handleGameEnd = (winner) => { 
+    const handleGameEnd = (winner) => {
+        gameManager.setIsGameOver(true);
+
         if (winner === 1) {
             winnerText.textContent = "Tie!";
         } else {
