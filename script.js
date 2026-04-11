@@ -54,6 +54,7 @@ const gameboard = function() {
 
 const gameManager = function() {
     let isGameOver = false;
+    let botTimeout;
 
     let playerX = createPlayer("Player 1", "X");
     let playerO = createBot("Player 2", "O");
@@ -94,7 +95,7 @@ const gameManager = function() {
     const checkIsBot = () => {
         if (getCurrentPlayer().isBot && !isGameOver) {
             const timeout = (Math.random() * (1500 - 500 + 1) + 500); // Random time between 0.5 sec and 1.5 sec
-            setTimeout(() => {
+            botTimeout = setTimeout(() => {
                 const turnResult = getCurrentPlayer().playRound();
                 displayManager.handleTurnEnd(turnResult);
             }, timeout);
@@ -149,6 +150,7 @@ const gameManager = function() {
     const checkGameTie = () => !gameboard.getBoard().flat().includes("-");
 
     const resetGame = () => {
+        clearTimeout(botTimeout);
         gameboard.resetBoard();
         isGameOver = false;
         changeCurrentPlayer();
