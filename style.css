@@ -306,6 +306,10 @@ body {
     font-weight: 800;
 }
 
+#winner-symbol:empty {
+    display: none;
+}
+
 #play-again-btn {
     width: 75%;
     height: 30%;

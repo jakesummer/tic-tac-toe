@@ -240,6 +240,7 @@ const displayManager = function() {
 
         if (winner === 1) {
             winnerText.textContent = "Tie!";
+            winnerSymbol.textContent = "";
         } else {
             winnerText.textContent = `${winner.name} wins!`;
             winnerSymbol.textContent = `${winner.symbol}`;
